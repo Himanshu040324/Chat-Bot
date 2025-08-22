@@ -13,10 +13,21 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_API_KEY,
 });
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chat-bot-sand-eight-34.vercel.app", // replace if Vercel URL changes
+];
+
 // cors
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React dev server
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
     credentials: true,
   })
