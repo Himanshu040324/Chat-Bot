@@ -24,6 +24,10 @@ app.use(
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Hello World! Chat Bot H Server Online...");
+});
+
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
